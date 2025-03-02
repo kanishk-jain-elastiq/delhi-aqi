@@ -1,8 +1,6 @@
 import os
-import time
-import schedule
-import requests
 import tweepy
+import requests
 from datetime import datetime
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, Column, Integer, Date, Boolean
@@ -151,22 +149,12 @@ def daily_task():
         session.close()
 
 def main():
-    """Main function to schedule and run the bot"""
+    """Main function to run the bot"""
     print("Starting Delhi AQI Twitter Bot...")
-    
-    # Schedule the task to run daily at 9:00 AM IST (3:30 AM UTC)
-    schedule.every().day.at("03:30").do(daily_task)
-    
-    # Run the task once immediately
     daily_task()
-    
-    # Keep the script running
-    while True:
-        schedule.run_pending()
-        time.sleep(60)
 
 if __name__ == "__main__":
     # Create tables
     Base.metadata.create_all(engine)
-    # Then run your main function
+    # Run the task once
     main() 
