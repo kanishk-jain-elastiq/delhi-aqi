@@ -92,10 +92,11 @@ def create_rules_tweet():
     """Create a tweet explaining the rules"""
     rules = (
         "🔍 How this works:\n\n"
-        "1️⃣ I tweet Delhi's AQI daily\n"
+        "1️⃣ I tweet Delhi's AQI at 9:00 AM IST daily\n"
         "2️⃣ Counter starts when AQI ≤ 25\n"
         "3️⃣ Goal: 365 consecutive clean air days\n"
         "4️⃣ Counter resets if AQI > 25\n\n"
+        "This is an automated system I made using Cursor"
     )
     return rules
 
