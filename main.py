@@ -23,7 +23,12 @@ LOCATION_NAME = "Central Delhi"
 class Base(DeclarativeBase):
     pass
 
-engine = create_engine('sqlite:///aqi_tracker.db')
+# Modified database connection
+DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///aqi_tracker.db')  # fallback to SQLite for local development
+if DATABASE_URL.startswith("postgres://"):  # Heroku provides "postgres://" but SQLAlchemy needs "postgresql://"
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 
 class AQIRecord(Base):
@@ -161,4 +166,7 @@ def main():
         time.sleep(60)
 
 if __name__ == "__main__":
+    # Create tables
+    Base.metadata.create_all(engine)
+    # Then run your main function
     main() 
